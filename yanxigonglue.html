@@ -66,6 +66,11 @@
                 let num = i % $(".card").length + 1;
                 $(".card").eq(i).find(".front").css("background-image", `url(./素材/${num}.jpg)`)
             }
+            // 測試用來偷看
+            $(".card").eq(i), attr("data-card", num);
+
+
+
         })
 
 
