@@ -13,7 +13,7 @@
             height: 150px;
             transform-style: preserve-3d;
             position: relative;
-            transform: rotateX(180deg);
+            transform: rotateX(0deg);
             transition: transform .5s;
             float: left;
             margin: 10px;
@@ -26,6 +26,7 @@
             background-repeat: no-repeat;
             background-position: center;
             position: absolute;
+            transform: rotateX(180deg);
 
         }
 
@@ -37,7 +38,7 @@
             background-repeat: no-repeat;
             background-position: center;
             position: absolute;
-            transform: rotateX(180deg);
+            transform: rotateX(0deg);
         }
 
         #game {
@@ -46,13 +47,14 @@
         }
 
         .open {
-            transform: rotateX(0deg);
+            transform: rotateX(180deg);
         }
     </style>
 </head>
 
 <body>
     <div id="game"></div>
+    <input type="button" value="start" id="btn">
     <script src="jquery-3.5.0.min.js"></script>
     <script>
         $(function () {
@@ -85,6 +87,23 @@
                     $(this).addClass("open")
                 }
             })
+            // setTimeout(() => {
+            //     $(".card").removeClass("open");
+            // }, 3000)
+
+            // step1 點擊start翻過來給看 過時間翻回去
+            $("#btn").on("click", function () {
+                // $(".back").css("transform", "rotateX(180deg)");
+                $(".card").addClass("open");
+                setTimeout(() => {
+                    $(".card").removeClass("open");
+                    // $(".front").css("transform", "rotateX(0deg)")
+                }, 3000)
+            })
+
+
+
+
 
 
 
