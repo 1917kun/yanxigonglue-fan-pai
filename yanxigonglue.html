@@ -49,6 +49,130 @@
         .open {
             transform: rotateX(180deg);
         }
+
+        @-webkit-keyframes fadeOutUp {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -100%, 0);
+                transform: translate3d(0, -100%, 0);
+            }
+        }
+
+        @keyframes fadeOutUp {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -100%, 0);
+                transform: translate3d(0, -100%, 0);
+            }
+        }
+
+        .fadeOutUp {
+            -webkit-animation-name: fadeOutUp;
+            animation-name: fadeOutUp;
+        }
+
+        @-webkit-keyframes fadeOutUpBig {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -2000px, 0);
+                transform: translate3d(0, -2000px, 0);
+            }
+        }
+
+        @keyframes fadeOutUpBig {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -2000px, 0);
+                transform: translate3d(0, -2000px, 0);
+            }
+        }
+
+        .fadeOutUpBig {
+            -webkit-animation-name: fadeOutUpBig;
+            animation-name: fadeOutUpBig;
+        }
+
+        @-webkit-keyframes fadeInDown {
+            from {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -100%, 0);
+                transform: translate3d(0, -100%, 0);
+            }
+
+            to {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -100%, 0);
+                transform: translate3d(0, -100%, 0);
+            }
+
+            to {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        .fadeInDown {
+            -webkit-animation-name: fadeInDown;
+            animation-name: fadeInDown;
+        }
+
+        @-webkit-keyframes fadeInDownBig {
+            from {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -2000px, 0);
+                transform: translate3d(0, -2000px, 0);
+            }
+
+            to {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        @keyframes fadeInDownBig {
+            from {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -2000px, 0);
+                transform: translate3d(0, -2000px, 0);
+            }
+
+            to {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        .fadeInDownBig {
+            -webkit-animation-name: fadeInDownBig;
+            animation-name: fadeInDownBig;
+        }
     </style>
 </head>
 
@@ -56,8 +180,20 @@
     <div id="game"></div>
     <input type="button" value="start" id="btn">
     <script src="jquery-3.5.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script>
         $(function () {
+            const music1 = new Audio("./素材/1.mp3")
+            const music2 = new Audio("./素材/2.mp3")
+            const music3 = new Audio("./素材/3.mp3")
+            const music4 = new Audio("./素材/4.mp3")
+            const music5 = new Audio("./素材/5.mp3")
+            const music6 = new Audio("./素材/6.mp3")
+            const music7 = new Audio("./素材/7.mp3")
+            const music8 = new Audio("./素材/8.mp3")
+            const music9 = new Audio("./素材/9.mp3")
+
+
             // 產生九張卡片(目前沒有front的圖片)
             for (let i = 0; i < 9; i++) {
                 $("#game").append(`<div class="card">
@@ -82,19 +218,42 @@
             }
 
             // 點擊翻牌
-            $(".card").on("click", function () {
-                if (!$(this).hasClass("open")) {
-                    $(this).addClass("open")
-                }
-            })
+            // $(".card").on("click", function () {
 
-            // step1 點擊start翻過來給看 過時間翻回去
-            $("#btn").on("click", function () {
-                // $(".back").css("transform", "rotateX(180deg)");
+            //     if (!$(this).hasClass("open")) {
+            //         $(this).addClass("open")
+
+            //     }
+            // })
+
+
+            //點擊start 
+            // 1.翻過來給看 過時間翻回去
+            // 2.
+            // 3.
+            $("#btn").click(function () {
+                // 按鈕不給按 
+                $(this).attr("disabled", true);
+
                 $(".card").addClass("open");
                 setTimeout(() => {
                     $(".card").removeClass("open");
                     // $(".front").css("transform", "rotateX(0deg)")
+                    // 跳通知
+                    Swal.fire({
+                        icon: "info",
+                        title: "接下來請聽一段音樂選合適的角色卡片",
+                        showClass: {
+                            popup: 'animated fadeInDown faster'
+                        },
+                        hideClass: {
+                            popup: 'animated fadeOutUp faster'
+                        }
+                    })
+                    setTimeout(() => {
+                        music1.play();
+
+                    }, 3000)
                 }, 3000)
             })
 
