@@ -69,6 +69,13 @@
                 $(".card").eq(i).attr("data-card", num);
             }
 
+            // 洗牌
+            for (let i = 0; i < 9; i++) {
+                let target = Math.floor(Math.random() * $(".card").length)
+                let rand = Math.floor(Math.random() * $(".card").length)
+                $(".card").eq(target).insertAfter($(".card").eq(rand))
+            }
+
 
 
         })
