@@ -150,14 +150,14 @@
 
                 $(".card").addClass("open");
                 Swal.fire({
-                    icon: "info",
-                    title: "先欣賞一下",
-                    showClass: {
-                        popup: 'animated fadeInDown faster'
-                    },
-                    hideClass: {
-                        popup: 'animated fadeOutUp faster'
-                    }
+                    title: '請先欣賞一下',
+                    width: 270,
+                    height: 280,
+                    padding: '3.5em',
+                    background: '#fff url(/../素材/羞赧一笑.gif)',
+                    backdrop: `rgba(0,0,0,0.5) url()
+                    left top
+                    no-repeat`
                 })
                 setTimeout(() => {
                     $(".card").removeClass("open");
@@ -212,28 +212,48 @@
                         if (num == 10) {
                             setTimeout(() => {
                                 Swal.fire({
-                                    icon: "info",
-                                    title: "皇上吉祥 婢女告退",
-                                    showClass: {
-                                        popup: 'animated fadeInDown faster'
-                                    },
-                                    hideClass: {
-                                        popup: 'animated fadeOutUp faster'
-                                    }
+                                    title: '究竟你/妳打了爾晴多少次耳光',
+                                    width: 470,
+                                    height: 300,
+                                    padding: '3.8em',
+                                    background: '#fff url()',
+                                    backdrop: `rgba(0,0,0,0.5) url()
+                                    left top
+                                    no-repeat`
                                 })
-                            }, 3000)
+                            }, 2000)
+                            setTimeout(() => {
+                                Swal.fire({
+                                    title: '結束了 拜拜',
+                                    width: 270,
+                                    height: 280,
+                                    padding: '3.5em',
+                                    background: '#fff url(/../素材/沒有靈魂的拜拜.gif)',
+                                    backdrop: `rgba(0,0,0,0.5) url()
+                                    left top
+                                    no-repeat`
+                                })
+                            }, 5000)
                         }
                     }
 
-                    // 如果被翻過來不是該段歌詞則一秒後翻回去
+                    // 如果被翻過來不是該段歌詞則翻回去
                     if ($(this).find(".front").css("background-image").substr(-7, 1) !== music.src.substr(-5, 1)) {
+
+                        Swal.fire({
+                            title: '答錯了',
+                            width: 470,
+                            height: 300,
+                            padding: '3.8em',
+                            background: '#fff url(/../素材/給老子死.gif)',
+                            backdrop: `rgba(0,0,0,0.5) url()
+                                    left top
+                                    no-repeat`
+                        })
                         setTimeout(() => {
                             $(this).removeClass("open")
                         }, 1000)
                     }
-
-                    // if ()
-
                 })
             })
 
