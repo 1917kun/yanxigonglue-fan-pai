@@ -7,15 +7,16 @@
     <title>Document</title>
     <link rel="stylesheet" href="./animate.css">
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
+            list-style: none;
         }
 
         #bg {
             width: 100vw;
             height: 100vh;
-            background-image: url(./素材/bg.jpg);
+            background-image: url(./素材/bg.stest.jpg);
             background-repeat: no-repeat;
             background-position: fixed;
             background-size: cover;
@@ -28,7 +29,7 @@
             width: 1080px;
             margin: auto;
             position: absolute;
-            top: 10%;
+            top: 3%;
             left: 22%;
             transform: translate(-50px, -50px);
 
@@ -36,13 +37,18 @@
 
         #btn {
             position: absolute;
-            top: 90%;
-            left: 45%;
+            top: 55%;
+            left: 6.3%;
             width: 50px;
             height: 50px;
+            border: none;
             border-radius: 10%;
-            box-shadow: 1px 1px 3px #ff3c00;
-            background-image: url(./素材/button.jpg)
+            /* box-shadow: 1px 1px 3px #ff3c00; */
+            background-color: transparent;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            filter: drop-shadow(0px 0px 4px #aaa);
+            /* background-image: url(./素材/button.jpg) */
         }
 
         .card {
@@ -57,6 +63,7 @@
             float: left;
             margin: 20px;
             display: none;
+            pointer-events: none;
         }
 
         .front {
@@ -90,7 +97,7 @@
 <body>
     <div id="bg">
         <div id="game"></div>
-        <input type="button" value="" style="width: 55px;height: 56px;background-image: url('./素材/button.jpg');"
+        <input type="button" value="" style="width: 55px;height: 56px;background-image: url('./素材/button.png');"
             id="btn">
     </div>
     <script src="jquery-3.5.0.min.js"></script>
@@ -99,6 +106,14 @@
         $(function () {
             const rand = Math.floor(Math.random() * 3)
             const music = new Audio()
+
+
+
+
+
+            music.src = (`./素材/1.mp3`)
+            music.load();
+
 
 
             // 產生九張卡片(目前沒有front的圖片)
@@ -125,23 +140,32 @@
             }
 
             //點擊start 
-            // 1.翻過來給看 過時間翻回去
-            // 2.播一段音樂同時跟電腦翻 時間依序為8 8 7 7 6 5 5 4 3秒 如果音樂沒放完就按那就停止音樂
-            // 3.
+            // 翻過來給看 過時間翻回去 
             $("#btn").click(function () {
                 // 按鈕不給按 
                 $(this).attr("disabled", true);
 
-                $(".card").css("display", "block")
+
+                $(".card").css("display", "block");
 
                 $(".card").addClass("open");
+                Swal.fire({
+                    icon: "info",
+                    title: "先欣賞一下",
+                    showClass: {
+                        popup: 'animated fadeInDown faster'
+                    },
+                    hideClass: {
+                        popup: 'animated fadeOutUp faster'
+                    }
+                })
                 setTimeout(() => {
                     $(".card").removeClass("open");
                     // $(".front").css("transform", "rotateX(0deg)")
                     // 跳通知
                     Swal.fire({
                         icon: "info",
-                        title: "接下來請聽一段音樂選合適的角色卡片",
+                        title: "接下來請聽音樂選合適的卡片",
                         showClass: {
                             popup: 'animated fadeInDown faster'
                         },
@@ -149,29 +173,73 @@
                             popup: 'animated fadeOutUp faster'
                         }
                     })
+                    Swal.fire({
+                        icon: "info",
+                        title: "慢慢欣賞請別點太快",
+                        showClass: {
+                            popup: 'animated fadeInDown faster'
+                        },
+                        hideClass: {
+                            popup: 'animated fadeOutUp faster'
+                        }
+                    })
+                    music.play();
+                    $(".card").css("pointer-events", "auto")
+                }, 5000)
 
-                }, 3000)
 
-                // 點擊翻牌
+                let num = 1;
+                // 點擊翻牌(如果翻到該段音樂,卡牌停一秒消失,播下一段音樂)
                 $(".card").on("click", function () {
+                    // 如果沒被翻過來就翻過來
                     if (!$(this).hasClass("open")) {
                         $(this).addClass("open")
                     }
+
+                    // 如果被翻過來是該段歌詞則音樂停止
+
+                    if ($(this).find(".front").css("background-image").substr(-7, 1) == music.src.substr(-5, 1)) {
+
+                        music.pause();
+                        setTimeout(() => {
+                            alert("答對了請繼續")
+                        }, 300)
+                        setTimeout(() => {
+                            music.src = (`./素材/${num}.mp3`)
+                            music.play();
+                        }, 1)
+                        num++;
+                        if (num == 10) {
+                            setTimeout(() => {
+                                Swal.fire({
+                                    icon: "info",
+                                    title: "皇上吉祥 婢女告退",
+                                    showClass: {
+                                        popup: 'animated fadeInDown faster'
+                                    },
+                                    hideClass: {
+                                        popup: 'animated fadeOutUp faster'
+                                    }
+                                })
+                            }, 3000)
+                        }
+                    }
+
+                    // 如果被翻過來不是該段歌詞則一秒後翻回去
+                    if ($(this).find(".front").css("background-image").substr(-7, 1) !== music.src.substr(-5, 1)) {
+                        setTimeout(() => {
+                            $(this).removeClass("open")
+                        }, 1000)
+                    }
+
+                    // if ()
+
                 })
             })
 
-            let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-            arr.sort(() => Math.random() - 0.5)
-            console.log(arr);
 
-            let i = 0;
-            const musicplay = () => {
-                music.src = (`./素材/${arr[i]}.mp3`)
-                console.log(music.src);
-                i++;
-                music.load();
-                music.play();
-            };
+
+
 
         })
 
